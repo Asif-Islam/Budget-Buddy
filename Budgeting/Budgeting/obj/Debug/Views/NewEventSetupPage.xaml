@@ -1,0 +1,110 @@
+﻿<Page 
+    x:Class="Budgeting.Views.NewEventSetupPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Budgeting.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d" Height="665" Background="Black">
+    <Page.BottomAppBar>
+        <CommandBar>
+            <AppBarButton x:ConnectionId='1' x:Name="GoBack" Icon="Back" Label="Go Back" Background="Black"                     />
+            <AppBarButton x:ConnectionId='2' x:Name="SumbitButton" Icon="Accept" Label="Complete"                        />
+        </CommandBar>
+    </Page.BottomAppBar>
+
+    <ScrollViewer>
+        <Grid Background="#FF424B5D" Height="1032">
+            <Grid.Resources>
+                <DataTemplate x:Key="ImageTemplate">
+                    <Image Height="80" Width="100" Source="{Binding}"/>
+                </DataTemplate>
+            </Grid.Resources>
+            <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="New Event" VerticalAlignment="Top" Width="222" FontSize="40" Foreground="#FFFDFDFD" Margin="105,0,0,0"/>
+            <StackPanel HorizontalAlignment="Left" Height="944" Margin="10,58,0,0" VerticalAlignment="Top" Width="380">
+                <Canvas HorizontalAlignment="Left" Height="60" VerticalAlignment="Top" Width="380">
+                    <TextBox x:Name="NameBox" Canvas.Left="126" Margin="0" TextWrapping="Wrap" Text="" Height="33" Width="254"/>
+                    <TextBlock VerticalAlignment="Center" TextWrapping="Wrap" Text="Name:" Canvas.Top="4" Canvas.Left="10" FontSize="24"/>
+                </Canvas>
+                <Canvas HorizontalAlignment="Left" Height="60" VerticalAlignment="Top" Width="380">
+                    <TextBox x:Name="LocationBox" Canvas.Left="126" Margin="0" TextWrapping="Wrap" Text="" Height="33" Width="254"/>
+                    <TextBlock VerticalAlignment="Center" TextWrapping="Wrap" Text="Location:" Canvas.Top="4" Canvas.Left="10" FontSize="24"/>
+                </Canvas>
+                <Canvas HorizontalAlignment="Left" Height="60" VerticalAlignment="Top" Width="380">
+                    <TextBlock VerticalAlignment="Center" TextWrapping="Wrap" Text="Sub-Budget
+:" Canvas.Top="4" Canvas.Left="10" FontSize="24"/>
+                    
+                    <Button x:Name="SBBoxButton" Canvas.Left="165" Canvas.Top="-10" Width="215" Height="52" Background="{x:Null}">
+                        <Button.Flyout>
+                            <ListPickerFlyout x:ConnectionId='9' x:Name="SBBox" ItemsSource="{Binding}"                        >
+                                <ListPickerFlyout.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Name}"/>
+                                    </DataTemplate>
+                                </ListPickerFlyout.ItemTemplate>
+                            </ListPickerFlyout>
+                        </Button.Flyout>
+                    </Button>
+                </Canvas>
+                <Canvas HorizontalAlignment="Left" Height="60" VerticalAlignment="Top" Width="380">
+                    <TextBox x:Name="PriceTextBox" InputScope="Number" Canvas.Left="84" Margin="0" TextWrapping="Wrap" Text="" Height="33" Width="105" Canvas.Top="-1"/>
+                    <TextBlock VerticalAlignment="Center" TextWrapping="Wrap" Text="Price:" Canvas.Top="4" Canvas.Left="10" FontSize="24"/>
+                    <CheckBox x:Name="DeductionBox" Content="Deduction" Canvas.Left="241" Canvas.Top="-12" IsChecked="True"/>
+                </Canvas>
+                <Canvas HorizontalAlignment="Left" Height="60" VerticalAlignment="Top" Width="380">
+                    <TextBlock VerticalAlignment="Center" TextWrapping="Wrap" Text="Date:" Canvas.Top="4" Canvas.Left="10" FontSize="24"/>
+                    <DatePicker x:Name="DateBox" Canvas.Left="82" Canvas.Top="-10"/>
+                </Canvas>
+                <Canvas HorizontalAlignment="Left" Height="60" VerticalAlignment="Top" Width="380">
+                    <TextBlock VerticalAlignment="Center" TextWrapping="Wrap" Text="Pay Method:" Canvas.Top="4" Canvas.Left="10" FontSize="24"/>
+                    <Button x:Name="PMBoxButton" Canvas.Left="165" Canvas.Top="-10" Width="215" Height="52" Background="{x:Null}">
+                        <Button.Flyout>
+                            <ListPickerFlyout x:ConnectionId='8' x:Name="PMBox"                         >
+                            </ListPickerFlyout>
+                        </Button.Flyout>
+                    </Button>
+                </Canvas>
+                <Canvas HorizontalAlignment="Left" Height="181" VerticalAlignment="Top" Width="380">
+                    <TextBox x:Name="TagBox" Canvas.Left="67" Margin="0" TextWrapping="Wrap" Text="" Height="33" Width="187" Canvas.Top="7"/>
+                    <TextBlock VerticalAlignment="Center" TextWrapping="Wrap" Text="Tags:" Canvas.Top="10" Canvas.Left="10" FontSize="24"/>
+                    <AppBarButton x:ConnectionId='6' x:Name="AddTagButton" Icon="Add" Label="Add Tag" Canvas.Left="249" Canvas.Top="-13"                           />
+                    <AppBarButton x:ConnectionId='7' x:Name="DeleteTagButton" Icon="Delete" Label="Delete Tag" Canvas.Left="305" Canvas.Top="-12"                              />
+                    <ListBox x:Name="TagListBox" Height="100" Canvas.Left="10" Canvas.Top="71" Width="360" ScrollViewer.VerticalScrollBarVisibility="Visible" Background="#CC000000" BorderBrush="White" FontSize="24" Foreground="White">
+                    </ListBox>
+
+                </Canvas>
+                <Canvas HorizontalAlignment="Left" Height="216" VerticalAlignment="Top" Width="380">
+                    <TextBlock VerticalAlignment="Center" TextWrapping="Wrap" Text="Photos:" Canvas.Top="14" Canvas.Left="10" FontSize="24"/>
+                    <AppBarButton x:ConnectionId='4' x:Name="CameraButton" Icon="Camera" Label="Add Photo" Canvas.Left="249" Canvas.Top="-13"                       />
+                    <AppBarButton x:ConnectionId='5' x:Name="DeletePhotoButton" Icon="Delete" Label="Delete Photo" Canvas.Left="305" Canvas.Top="-12"                                />
+                    <ListBox x:Name="PhotoListBox" Height="150" ItemTemplate="{StaticResource ImageTemplate}" Canvas.Left="10" Canvas.Top="61" Width="360" ScrollViewer.VerticalScrollBarVisibility="Visible" Background="#CC000000" BorderBrush="White" FontSize="24" Foreground="White"/>
+
+                </Canvas>
+                <Canvas HorizontalAlignment="Left" Height="175" VerticalAlignment="Top" Width="380">
+                	<TextBlock VerticalAlignment="Center" TextWrapping="Wrap" Text="Event Image:" FontSize="24" Canvas.Left="11" Canvas.Top="10" Width="157"/>
+                	<Image x:Name="ImagePreview" Source="{Binding}" HorizontalAlignment="Left" Height="100" VerticalAlignment="Top" Width="120" Canvas.Left="11" Canvas.Top="44"/>
+                	<Button x:Name="EventImageButton" Content="Change Image" HorizontalAlignment="Left" VerticalAlignment="Top" Height="17" Width="153" Background="#FF20A09B" Canvas.Left="172" Canvas.Top="62">
+                		<Button.Flyout>
+                			<ListPickerFlyout x:ConnectionId='3' x:Name="EventImagePicker" ItemsSource="{Binding}"                                 >
+                				<ListPickerFlyout.ItemTemplate>
+                					<DataTemplate>
+                						<Grid>
+                							<Grid.ColumnDefinitions>
+                								<ColumnDefinition Width="96"/>
+                								<ColumnDefinition/>
+                							</Grid.ColumnDefinitions>
+                							<Image Width="64" Height="64"  Grid.Column="0" Source="{Binding eImage}"/>
+                							<TextBlock Grid.Column="1" Text="{Binding Name}" HorizontalAlignment="Center"/>
+                						</Grid>
+                					</DataTemplate>
+                				</ListPickerFlyout.ItemTemplate>
+                			</ListPickerFlyout>
+                		</Button.Flyout>
+                	</Button>
+                </Canvas>
+
+            </StackPanel>
+        </Grid>
+    </ScrollViewer>
+</Page>
+

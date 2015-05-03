@@ -1,0 +1,46 @@
+﻿<Page
+    x:Class="Budgeting.Views.NewBudgetSetup"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Budgeting.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Page.BottomAppBar>
+        <CommandBar>
+            <AppBarButton x:ConnectionId='1' x:Name="GoBack" Icon="Back" Label="Go Back" IsEnabled="True"                     />
+            <AppBarButton x:ConnectionId='2' x:Name="SumbitButton" Icon="Accept" Label="Complete"                        Width="77"/>
+        </CommandBar>
+    </Page.BottomAppBar>
+    
+    <Grid Background="#FF424B5D" Margin="0,-26.667,0,-0.333">
+        <TextBlock x:Name="PageTitle" HorizontalAlignment="Left" Margin="72,4,0,0" TextWrapping="Wrap" Text="New Budget" VerticalAlignment="Top" FontFamily="Segoe WP" FontSize="48"/>
+        <Canvas x:Name="BudgetNameCanvas" HorizontalAlignment="Left" Height="114" Margin="10,77,0,0" VerticalAlignment="Top" Width="380">
+            <TextBlock x:Name="BudgetNameTextBlock" Canvas.Left="10" TextWrapping="Wrap" Text="Budget Name:" Canvas.Top="8" FontFamily="Segoe WP" FontSize="24"/>
+            <TextBox x:Name="BudgetNameTextBox" Canvas.Left="10" Margin="0" TextWrapping="Wrap" Text="MyBudget" Canvas.Top="43" Height="35" Width="360" Foreground="Black"/>
+        </Canvas>
+        <Canvas x:Name="PasswordCanvas" HorizontalAlignment="Left" Height="114" Margin="10,196,0,0" VerticalAlignment="Top" Width="380">
+            <TextBlock x:Name="BudgetPwTextBlock" Canvas.Left="10" TextWrapping="Wrap" Text="Budget Password:" Canvas.Top="6" FontFamily="Segoe UI Symbol" FontSize="24"/>
+            <CheckBox x:ConnectionId='8' x:Name="BudgetPwCheckBox" Content="Password" Canvas.Left="252" Canvas.Top="-9" Height="58" Width="118"                                                                    />
+            <PasswordBox x:Name="BudgetPassword" Canvas.Left="10" Margin="0" Canvas.Top="43" Height="35" Width="360" IsEnabled="False" Background="White" Foreground="Black"/>
+        </Canvas>
+        <Canvas x:Name="StartDateCanvas" HorizontalAlignment="Left" Height="86" Margin="10,298,0,0" VerticalAlignment="Top" Width="380">
+            <TextBlock x:Name="StartDateTextBlock" Canvas.Left="10" TextWrapping="Wrap" Text="Start Date:" Canvas.Top="8" FontFamily="Segoe WP" FontSize="24"/>
+            <DatePicker x:ConnectionId='7' x:Name="StartDatePicker" Canvas.Left="10" Canvas.Top="33" Width="151" FontFamily="Sitka Subheading"                            Height="51" Background="#FF0D9790"/>
+        </Canvas>
+        <Canvas x:Name="EndDateCanvas" HorizontalAlignment="Left" Height="213" Margin="10,389,0,0" VerticalAlignment="Top" Width="380">
+            <TextBlock x:Name="EndDateTextBlock" Canvas.Left="10" TextWrapping="Wrap" Text="End Date:" Canvas.Top="8" FontFamily="Sitka Subheading" FontSize="24"/>
+            <DatePicker x:Name="EndDatePicker" Canvas.Left="13" Canvas.Top="148" Width="109" FontFamily="Sitka Subheading" IsEnabled="False" Background="#FF0D9790"/>
+            <Canvas x:Name="RadioButtonCanvas" Height="110" Canvas.Left="13" Canvas.Top="43" Width="357">
+                <RadioButton x:ConnectionId='3' x:Name="WeekRB" Content="Week From Start" Canvas.Top="-6" FontSize="14.667" Width="123"                      Tag ="1"/>
+                <RadioButton x:ConnectionId='4' x:Name="MonthRB" Content="Month From Start" Canvas.Top="-6" FontSize="14.667" Width="123" Canvas.Left="189"                      Tag="2"/>
+                <RadioButton x:ConnectionId='5' x:Name="YearRB" Content="Year From Start" Canvas.Top="57" FontSize="14.667" Width="123"                      Tag="3"/>
+                <RadioButton x:ConnectionId='6' x:Name="CustomRB" Content="Custom" Canvas.Top="57" FontSize="14.667" Width="123" Canvas.Left="189"                      Tag="4"/>
+            </Canvas>
+        </Canvas>
+
+    </Grid>
+</Page>
+

@@ -1,0 +1,166 @@
+﻿<Page
+    x:Class="Budgeting.Views.BudgetHomePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Budgeting.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    xmlns:q="using:Budgeting.Converters"
+    xmlns:Charting="using:WinRTXamlToolkit.Controls.DataVisualization.Charting" Background="Black">
+    <Page.BottomAppBar>
+        <CommandBar>
+            <AppBarButton x:Name="NewEventButton" Icon="Add" Label="New Event" Click="NewEvent_Click" IsEnabled="False"/>
+            <AppBarButton x:Name="GoBack" Icon="Back" Label="Go Back" IsEnabled="True" Click="GoBack_Click"/>
+        </CommandBar>
+    </Page.BottomAppBar>
+
+    <Grid Height="635">
+        <Grid.Resources>
+            <q:ColorToBrushConverter x:Key="StringImageConverter"/>
+            <q:ARGBToBrush x:Key="ColorConverter"/>
+           
+            <DataTemplate x:Key="ListBoxTemplate">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="80"/>
+                        <ColumnDefinition Width="136"/>
+                        <ColumnDefinition Width="136"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid Grid.Column="0" Width="64" Height="64" Background="{Binding SubBudgetLocation, Converter={StaticResource ColorConverter} }">
+                        <Image Width="48" Height="48" Source="{Binding imagefilepath}"/>
+                    </Grid>
+
+
+
+                    <StackPanel Grid.Column="1" Width="136">
+                        <TextBlock Text="{Binding Name}" FontSize="18" Foreground="White"/>
+                        <TextBlock Text="{Binding EventLocation}" FontSize="18" Foreground="White"/>
+                    </StackPanel>
+                    <StackPanel Grid.Column="2" Width="136">
+                        <TextBlock Text="{Binding Pricestring}" FontSize="18" Foreground="White"/>
+                        <TextBlock Text="{Binding EventDate}" FontSize="18" Foreground="White"/>
+                    </StackPanel>
+                </Grid>
+            </DataTemplate>
+            <DataTemplate x:Key="EventTemplate">
+
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition  Width="64"/>
+                        <ColumnDefinition  Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Row="0" Grid.Column="0"  Text="{Binding Path=Name}" FontSize="24" Foreground="LightSeaGreen" FontWeight="Bold"/>
+                    <TextBlock Grid.Row="1" Grid.Column="0" Text="{Binding Path=EventLocation}" FontSize="20" Foreground="White" FontStyle="Normal" FontWeight="SemiLight"/>
+                    <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Path=SubBudgetName}" FontSize="20" Foreground="White"  FontStyle="Normal" FontWeight="SemiLight"/>
+                    <TextBlock Grid.Row="2" Grid.Column="0" Text="{Binding Path=PayMethod}" FontSize="20" Foreground="White"  FontStyle="Normal" FontWeight="SemiLight"/>
+                    <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding Path=Pricestring}" FontSize="20" Foreground="White" FontStyle="Normal" FontWeight="SemiLight"/>
+                </Grid>
+
+            </DataTemplate>
+            <DataTemplate x:Key="LPFlout">
+                <Grid>
+
+                    <TextBlock Grid.Column="1" Text="{Binding Name}"/>
+                </Grid>
+            </DataTemplate>
+        </Grid.Resources>
+
+        <Pivot BorderBrush="#FF6E4040" Background="#FF424B5D" Margin="0" Height="609" VerticalAlignment="Top">
+            <Pivot.HeaderTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <TextBlock FontFamily="Segoe WP" Text="{Binding}" FontSize="56"/>
+                    </Grid>
+                </DataTemplate>
+            </Pivot.HeaderTemplate>
+            <PivotItem Header="Home Page" Margin="0,10,0,-2.167" FontFamily="Arial">
+                <Grid HorizontalAlignment="Left" Height="428" Margin="10,10,0,0" VerticalAlignment="Top" Width="380">
+
+                    <Button x:Name="NewSubBudget" Content="New Sub-Budget" HorizontalAlignment="Left" VerticalAlignment="Top" Click="NavigateToNewSB" Height="180" Width="180" Margin="0,0,-0.333,0" FontFamily="Segoe WP" Background="#FF286C9B"/>
+                    <Button x:Name="EditSubBudget" Content="Edit Sub-Budget" HorizontalAlignment="Left" VerticalAlignment="Top"  Width="180" Height="180" Margin="200,185,0,0" Background="#FF286C9B">
+                        <Button.Flyout>
+                            <ListPickerFlyout x:Name="EditFlyout" ItemTemplate="{StaticResource LPFlout}" ItemsSource="{Binding}" ItemsPicked="GoToEdit"/>
+                        </Button.Flyout>
+                    </Button>
+                    <Button x:Name="DeleteSubBudget" Content="Delete Sub-Budget" HorizontalAlignment="Left" VerticalAlignment="Stretch"  Width="180" Margin="200,0,0,248" Background="#FF20A09B">
+                        <Button.Flyout>
+                            <ListPickerFlyout x:Name="DeleteFlyout" ItemTemplate="{StaticResource LPFlout}" ItemsSource="{Binding}" ItemsPicked="SubBudgetDeleteEvent"/>
+                        </Button.Flyout>
+                    </Button>
+                    <Button x:Name="GraphButton" Content="Statistics" HorizontalAlignment="Left" VerticalAlignment="Top" Height="180" Width="180" Background="#FF20A09B" FontFamily="Segoe WP" Margin="0,185,0,0" Click="StartGraph_Click"/>
+
+                </Grid>
+
+            </PivotItem>
+
+            <PivotItem Header="Sub-Budgets" Margin="9,0,5,0" RenderTransformOrigin="0.5,0.5" Height="550" VerticalAlignment="Top">
+                <Grid HorizontalAlignment="Left" Height="550" Width="376" Margin="10,0,-0.167,0">
+                    <Button x:Name="SBchooser" Content="Choose a Sub-Budget" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Margin="0,-10,0,503">
+                        <Button.Flyout>
+                            <ListPickerFlyout x:Name="SubFlyout" ItemsSource="{Binding}" ItemsPicked="SelectionChanged">
+                                <ListPickerFlyout.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Name}"/>
+                                    </DataTemplate>
+                                </ListPickerFlyout.ItemTemplate>
+                            </ListPickerFlyout>
+                        </Button.Flyout>
+                    </Button>
+
+
+                    <Grid x:Name="SubBudGrid" HorizontalAlignment="Left" Height="408" Margin="10,76,0,0" VerticalAlignment="Top" Width="356">
+
+                        <ListBox  x:Name="SubBudEventListBox" HorizontalContentAlignment="Stretch" ItemTemplate="{StaticResource ListBoxTemplate}" ItemsSource="{Binding}" Height="225" Margin="-12,173,0,0" VerticalAlignment="Top" Background="Black" BorderBrush="White" SelectionChanged="ViewEventDetails"/>
+                        <Grid HorizontalAlignment="Left" Height="100" Margin="47,33,0,0" VerticalAlignment="Top" Width="100"/>
+
+                    </Grid>
+                    <Grid x:Name="SubBudDetailsGrid" HorizontalAlignment="Left" Height="155" Margin="10,76,0,0" VerticalAlignment="Top" Width="341">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="215"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Border BorderThickness="3" BorderBrush="White" >
+                            <Canvas Background="#FF0C6864">
+                                <TextBlock Grid.Column="0" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Budget Limit:" FontSize="22" VerticalAlignment="Top" Canvas.Left="10" Canvas.Top="4"/>
+                                <TextBlock Grid.Column="0" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Budget Remainder:" FontSize="22" VerticalAlignment="Top" Canvas.Left="10" Canvas.Top="54"/>
+                                <TextBlock Grid.Column="0" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Event Count:" FontSize="22" VerticalAlignment="Top" Canvas.Left="15" Canvas.Top="106"/>
+                            </Canvas>
+                        </Border>
+                        <Border Grid.Column="1" BorderThickness="3" BorderBrush="White">
+                            <Canvas Grid.Column="1" Background="#FF199993">
+                                <TextBlock x:Name="LimitBlock"  Grid.Column="1" HorizontalAlignment="Left" TextWrapping="Wrap" FontSize="26" VerticalAlignment="Top" Height="35" Width="65" Text="" Foreground="White" Canvas.Left="41" Canvas.Top="4"/>
+                                <TextBlock x:Name="RemainderBlock" Grid.Column="1" HorizontalAlignment="Left" TextWrapping="Wrap" FontSize="26" VerticalAlignment="Top" Height="32" Width="65" Text="" Canvas.Left="41" Canvas.Top="54"/>
+                                <TextBlock x:Name="EventCountBlock" Grid.Column="1" HorizontalAlignment="Left" TextWrapping="Wrap" FontSize="26" VerticalAlignment="Top" Height="38" Width="65" Text="" Canvas.Left="41" Canvas.Top="107"/>
+                            </Canvas>
+                        </Border>
+                    </Grid>
+
+
+                </Grid>
+
+            </PivotItem>
+
+            <PivotItem Header="Event Searcher" Margin="10,0,0,-0.5">
+                <Canvas HorizontalAlignment="Left" Height="493" VerticalAlignment="Top" Width="390">
+                    <AppBarButton x:Name="SearchButton" Icon="Find" IsEnabled="False" Height="85" Width="72" Canvas.Left="321" Canvas.Top="37" Click="SearchButton_Click"/>
+                    <TextBox  x:Name="SearchTextBox" Canvas.Left="10" Margin="0" TextWrapping="Wrap" Text="" Canvas.Top="53" Height="26" Width="308"/>
+                    <TextBlock Canvas.Left="10" TextWrapping="Wrap" Text="Enter A Keyword and Press Search:" Canvas.Top="10" FontSize="24"/>
+                    <ListBox x:Name="SearchListBox" ItemsSource="{Binding}" HorizontalContentAlignment="Stretch" ItemTemplate="{StaticResource ListBoxTemplate}" Height="375" Canvas.Left="10" Canvas.Top="108" Width="370" Background="Black" Foreground="White" BorderBrush="White" FontSize="24" SelectionChanged="ViewEventDetails"/>
+                </Canvas>
+
+            </PivotItem>
+
+
+
+        </Pivot>
+
+
+    </Grid>
+
+</Page>
